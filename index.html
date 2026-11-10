@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minhas Músicas</title>
+<style>
+:root {
+  --bg: #f6f3fa; --card: #fff; --ink: #231a33; --line: #e2dbee; --head: #5b3cc4;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #14101c; --card: #1d1729; --ink: #ece7f5; --line: #34294a; }
+}
+body { margin: 0; padding: 24px 16px; background: var(--bg); color: var(--ink); font-family: system-ui, sans-serif; }
+main { max-width: 640px; margin: 0 auto; }
+h1 { font-size: 1.5rem; margin: 0 0 16px; }
+.wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; }
+th { background: var(--head); color: #fff; }
+th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+td.titulo { font-weight: 600; }
+td.dur, th.dur { text-align: right; }
+tbody tr:hover { background: color-mix(in srgb, var(--head) 10%, transparent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>🎵 Minhas Músicas</h1>
+  <div class="wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Título</th><th>Artista</th><th>Gênero</th><th class="dur">Duração</th></tr>
+      </thead>
+      <tbody id="corpo"></tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+const musicas = [
+  { titulo: "Garota de Ipanema", artista: "Tom Jobim", genero: "Bossa Nova", seg: 305 },
+  { titulo: "Águas de Março", artista: "Elis Regina", genero: "MPB", seg: 214 },
+  { titulo: "Construção", artista: "Chico Buarque", genero: "MPB", seg: 400 },
+  { titulo: "Tempo Perdido", artista: "Legião Urbana", genero: "Rock", seg: 300 },
+  { titulo: "Mas Que Nada", artista: "Jorge Ben Jor", genero: "Samba-rock", seg: 170 },
+  { titulo: "Trem das Onze", artista: "Adoniran Barbosa", genero: "Samba", seg: 175 }
+];
+
+function formatar(seg) {
+  const m = Math.floor(seg / 60);
+  const s = String(seg % 60).padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+document.getElementById("corpo").innerHTML = musicas.map((m, i) => `
+  <tr>
+    <td>${i + 1}</td>
+    <td class="titulo">${m.titulo}</td>
+    <td>${m.artista}</td>
+    <td>${m.genero}</td>
+    <td class="dur">${formatar(m.seg)}</td>
+  </tr>`).join("");
+</script>
+</body>
+</html>
